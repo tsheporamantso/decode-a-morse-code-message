@@ -1,19 +1,61 @@
-def decode_morse_code(morse)
-  morse_to_ascii = {
-    '.-' => 'a', '-...' => 'b', '-.-.' => 'c', '-..' => 'd', '.' => 'e',
-    '..-.' => 'f', '--.' => 'g', '....' => 'h', '..' => 'i', '.---' => 'j',
-    '-.-' => 'k', '.-..' => 'l', '--' => 'm', '-.' => 'n', '---' => 'o',
-    '.--.' => 'p', '--.-' => 'q', '.-.' => 'r', '...' => 's', '-' => 't',
-    '..-' => 'u', '...-' => 'v', '.--' => 'w', '-..-' => 'x', '-.--' => 'y', '--..' => 'z',
-    '-----' => 0, '.----' => 1, '..---' => 2, '...--' => 3, '....-' => 4,
-    '.....' => 5, '-....' => 6, '--...' => 7, '---..' => 8, '----.' => 9, '$$$' => ' '
-  }
-  morse_arr = morse.gsub(/\s{3}/, ' $$$ ')
-  morse_arr = morse_arr.split(/\s/)
-  morse_arr.each { |n| print morse_to_ascii[n].upcase }
-  puts
+CODE = {
+  '.-' => 'A',
+  '-...' => 'B',
+  '-.-.' => 'C',
+  '-..' => 'D',
+  '.' => 'E',
+  '..-.' => 'F',
+  '--.' => 'G',
+  '....' => 'H',
+  '..' => 'I',
+  '.---' => 'J',
+  '-.-' => 'K',
+  '.-..' => 'L',
+  '--' => 'M',
+  '-.' => 'N',
+  '---' => 'O',
+  '.--.' => 'P',
+  '--.-' => 'Q',
+  '.-.' => 'R',
+  '...' => 'S',
+  '-' => 'T',
+  '..-' => 'U',
+  '...-' => 'V',
+  '.--' => 'W',
+  '-..-' => 'X',
+  '-.--' => 'Y',
+  '--..' => 'Z'
+}.freeze
+
+# Decode a Morse code character
+def decode_character(str)
+  CODE[str]
 end
 
-decode_morse_code('.-')
-decode_morse_code('-- -.--   -. .- -- .')
-decode_morse_code('.-   -... --- -..-   ..-. ..- .-.. .-..   --- ..-.   .-. ..- -... .. . ...')
+# Decode a Morse code word
+def decode_word(word)
+  decoded = ''
+  arr_of_characters = word.split
+
+  arr_of_characters.each do |char|
+    decoded += decode_character(char)
+  end
+
+  decoded
+end
+
+# Decode entire message
+def decode(message)
+  decoded_message = ''
+  word_codes = message.split('   ')
+
+  word_codes.each do |word|
+    decoded_message += if decoded_message == ''
+                         decode_word(word)
+                       else
+                         " #{decode_word(word)}"
+                       end
+  end
+
+  decoded_message
+end
