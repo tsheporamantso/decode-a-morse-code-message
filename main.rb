@@ -9,7 +9,7 @@ def decode_morse_code(morse)
     '.....' => 5, '-....' => 6, '--...' => 7, '---..' => 8, '----.' => 9, '$$$' => ' '
   }
   morse_arr = morse.gsub(/\s{3}/, ' $$$ ')
-  morse_arr = morse_arr.split(' ')
+  morse_arr = morse_arr.split(/\s/)
   morse_arr.each { |n| print morse_to_ascii[n].upcase }
   puts
 end
